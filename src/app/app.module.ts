@@ -10,11 +10,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // FIREBASE IMPORTS
-import { AngularFireModule } from "@angular/fire";
-import { AngularFireAuthModule } from "@angular/fire/auth";
-import { AngularFireAuthGuard } from "@angular/fire/auth-guard";
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireAuthGuard } from "@angular/fire/compat/auth-guard";
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 // ALL ENVIRONMENT VARIABLES
 import { environment } from "../environments/environment";
@@ -33,9 +33,10 @@ import { ResultComponent } from './pages/result/result.component';
 import { LegalNoticeComponent } from './pages/legal-notice/legal-notice.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { StudentComponent } from './pages/student/student.component';
-import { ToastService } from './shared/services/toast.service';
+import { ToastService } from './shared/services/toast.service'; 
 import { TableService } from './shared/services/table.service';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
+import { AffiliationComponent } from './pages/affiliation/affiliation.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { ThankyouComponent } from './pages/thankyou/thankyou.component';
     ContactComponent,
     StudentComponent,
     ThankyouComponent,
+    AffiliationComponent,
   ],
   imports: [
     BrowserModule,

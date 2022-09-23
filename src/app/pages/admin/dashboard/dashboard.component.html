@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
   <ul ngbNav #nav="ngbNav" class="nav-tabs">
 
     <!-- STUDENT SECTION -->
@@ -50,22 +50,25 @@
         </div>
         <div *ngIf="students" class="row mt-4">
           <div *ngFor="let student of students; let i = index" class="col-md-12 mb-3">
-            <div class="student-card card">
+            <div class="student-card card" [ngClass]="{'disabled' : !student.status}">
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-md-1"> {{i + 1}} <img class="pic ml-1" src="{{student.profilePic}}" alt=""></div>
                   <div class="col-md-2">{{student.enrollmentNo}}</div>
-                  <div class="col-md-2">{{student.name}}</div>
-                  <div class="col-md-2">{{student.dob}}</div>
-                  <div class="col-md-3">
+                  <div class="col-md-1">{{student.name}}</div>
+                  <div class="col-md-1">{{student.dob}}</div>
+                  <div class="col-md-1">{{student.sessionStart}} - {{student.sessionEnd}}</div>
+                  <div class="col-md-1 important-text">{{student.courseShortForm}}</div>
+                  <div class="col-md-2">
                     <span *ngIf="student.result1">Result 1st</span>
                     <span *ngIf="student.result2" class="ml-2">Result 2nd</span>
                     <span *ngIf="!student.result1 && !student.result2" class="not-found">No result uploaded</span>
                   </div>
-                  <div class="col-md-2 d-flex justify-content-end">
+                  <div class="col-md-3 d-flex justify-content-end">
                     <button (click)="showModal(AddNewResult, student.id)" class="btn btn-outline-danger btn-sm">Add Result</button>
                     <button class="btn btn-outline-primary ml-2 btn-sm" (click)="editStudentModal(EditStudent, student)">Edit</button>
                     <button class="btn btn-outline-success ml-2 btn-sm" (click)="viewPage(student.id)">View</button>
+                    <button [disabled]="!student.status" class="btn btn-outline-success ml-2 btn-sm" (click)="hideResult(student.id)">Hide</button>
                   </div>
                 </div>
               </div>
@@ -108,10 +111,10 @@
                 <hr>
                 <div class="row">
                   <div class="col-md-6">
-                    <span class="w-100">Eligibility: {{course.eligibility}}th</span>
+                    <span class="w-100">Eligibility: {{course.eligibility}}</span>
                   </div>
                   <div class="col-md-6">
-                    <span class="w-100">Duration: {{course.duration}}Y</span>
+                    <span class="w-100">Duration: {{course.duration}}</span>
                   </div>
                 </div>
               </div>

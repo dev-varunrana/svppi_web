@@ -1,0 +1,49 @@
+<!-- HEADER -->
+<app-header [selectedPage]="'affiliation'"></app-header>
+
+<!-- CONTENT -->
+<div class="container-fluid">
+    <div class="header">
+        <h1>Affiliation</h1>
+    </div>
+</div>
+
+<div class="section container">
+    <h1 class="title">Recognition & Accreditation</h1>
+
+    <div class="row">
+        <div *ngFor="let item of affiliations" class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+            <div class="card affiliation-card">
+                <a [href]="item.url" target="_blank">
+                    <img [src]="item.src" alt="links">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section container">
+    <h1 class="title">LEGAL LETTERS</h1> 
+    <div class="legal-notice row">
+        <div class="col-md-6 mb-5">
+            <div class="card legal-card">
+                <h5 class="card-title text-center">
+                    MCI LETTER
+                </h5>
+                <a target="_blank" href="pdf/court-desision-uttara-khand-1.pdf">VIEW</a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-5">
+            <div class="card legal-card">
+                <h5 class="card-title text-center">
+                    SUPREME COURT ORDER 
+                </h5>
+                <a target="_blank" href="pdf/suprim-court-order.pdf">VIEW</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- FOOTER -->
+<app-footer></app-footer>

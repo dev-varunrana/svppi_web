@@ -22,7 +22,6 @@ export class DetailsComponent {
         private firestoreService: FirestoreService,
     ) {
         const id = this.route.snapshot.params['id'];
-        console.log(id);
         this.authService.getProfileDataSource().subscribe((user) => {
 
             this.firestoreService.getStudentbyId('students', id).pipe(

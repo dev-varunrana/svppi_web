@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject, from } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
@@ -41,7 +41,7 @@ export class FirebaseAuthService {
     public getProfileDataSource() {
         return this.angularFireAuth.user
             .pipe(filter((user) => user != null),
-                map((user) => {
+                map((user: any) => {
                     return {
                         "uid": user.uid,
                         "name": user.displayName,

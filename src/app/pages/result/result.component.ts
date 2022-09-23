@@ -67,7 +67,7 @@ export class ResultComponent {
             if (student[0]) {
               this.router.navigate(['student-details', student[0].id]);
             } else {
-              alert("Result is not published yet!!!");
+              alert("Result is not found!");
             }
           });
         }

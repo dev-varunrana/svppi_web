@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 export interface Course {
     id: string;
@@ -79,6 +79,11 @@ export class FirestoreService {
         const id = studentDetails.id;
         delete studentDetails.id;
         return this.firestore.doc(`${collectionName}/${id}`).set(studentDetails);
+    }
+
+    hideResult(studentId) {
+        return this.firestore.doc(`students/${studentId}`)
+        .set({status: false}, {merge: true});
     }
 
     deleteStudent(collectionName, id: string) {

@@ -28,9 +28,9 @@ export class HomeComponent {
     },
     {
       id: 2,
-      name: "Mohit Sharma",
+      name: "Poonam singh",
       quote: "I found Sardar Vallabhbhai Patel Paramedical Institute to be wonderful. The things taught in the classes here helped me a lot to deal things in my classes with the help of my lectures. I am doing pretty well in my classes thanks to my faculty at SVPPI.",
-      post: "~ Physiotherapist",
+      post: "~ Nursing Assistant",
       hospital: "Gayatri Hospital"
     },
     {
@@ -44,7 +44,7 @@ export class HomeComponent {
       id: 4,
       name: "Robin Jose",
       quote: "I felt very good by taking admission in Sardar Vallabhbhai Paramedical Institue. I found a way to be successful from here.",
-      post: "~ Medical Lab Techinician",
+      post: "~ Medical Lab Technician",
       hospital: "Lal Path Labs"
     },
     {
@@ -53,6 +53,13 @@ export class HomeComponent {
       quote: "After going through many efforts i found this wonderful institute. I really liked the way they educate here. I'm very grateful that i got success from SVPPI.",
       post: "~ X-RAY Technician",
       hospital: "Laxmi Hospital"
+    },
+    {
+      id: 6,
+      name: "Rashi kumari",
+      quote: "Taking the decision to study from SVPPI was the best decision of my life.Now i am doing a respectable job.",
+      post: "~ Nursing Assistant",
+      hospital: "Yashraj Hospital"
     }
   ]
 

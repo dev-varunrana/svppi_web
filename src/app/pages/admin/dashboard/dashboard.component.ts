@@ -9,7 +9,7 @@ import { FirebaseAuthService } from 'src/app/shared/services/firebase-auth.servi
 import { Course, FirestoreService, Student } from 'src/app/shared/services/firestore.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { TableService } from 'src/app/shared/services/table.service';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 
 @Component({
@@ -79,6 +79,7 @@ export class DashboardComponent {
     sessionStart: new FormControl('', [Validators.required]),
     sessionEnd: new FormControl('', [Validators.required]),
     profilePic: new FormControl(),
+    status: new FormControl('true')
   })
 
   addResultForm = new FormGroup({
@@ -419,6 +420,12 @@ export class DashboardComponent {
         alert("Please fill Total Marks First!!");
       }
     }
+  }
+
+  hideResult(studentId) {
+    this.firestoreService.hideResult(studentId)
+    .then((result) => {})
+    .catch((error) => console.log(error))
   }
 
   viewPage(id) {

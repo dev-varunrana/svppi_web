@@ -24,12 +24,16 @@ export class HeaderComponent {
       path: "/courses",
     },
     {
-      name: "result",
-      path: "/result",
+      name: "student zone",
+      path: "/studentzone",
     },
+    // {
+    //   name: "legal notice",
+    //   path: "/legal-notice",
+    // },
     {
-      name: "legal notice",
-      path: "/legal-notice",
+      name: "Affiliation",
+      path: "/affiliation"
     },
     {
       name: "contact",
@@ -40,6 +44,7 @@ export class HeaderComponent {
   constructor(private router: Router) { }
 
   goTo(page) {
+    console.log(page.path);
     this.router.navigate([page.path]);
   }
 

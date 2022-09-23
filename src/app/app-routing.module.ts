@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules ,RouterModule, Routes } from '@angular/router';
 
-import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
+import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['admin/login']);
 const redirectAuthorizedToHome = () => redirectLoggedInTo(["admin/dashboard"]);
@@ -17,6 +17,7 @@ import { AdminRoutingModule } from './pages/admin/admin-routing.module';
 import { AdminComponent } from './pages/admin/admin.component';
 import { StudentComponent } from './pages/student/student.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
+import { AffiliationComponent } from './pages/affiliation/affiliation.component';
 
 const routes: Routes = [
   {
@@ -37,7 +38,7 @@ const routes: Routes = [
     component: CoursesComponent,
   },
   {
-    path: "result",
+    path: "studentzone",
     component: ResultComponent,
   },
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
     component: ThankyouComponent,
   },
   {
+    path: "affiliation",
+    component: AffiliationComponent
+  },
+  {
     path: "admin",
     component: AdminComponent,
     loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)
@@ -64,7 +69,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      initialNavigation: 'enabled',
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled'
+  })
+],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

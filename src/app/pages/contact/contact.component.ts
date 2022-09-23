@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { faEnvelope, faMapMarkedAlt, faPhoneAlt, faSchool, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
+
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
@@ -9,6 +12,12 @@ import { ToastService } from 'src/app/shared/services/toast.service';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
+
+  faPhoneAlt = faPhoneAlt; 
+  faEnvelope = faEnvelope;
+  faMapMarkedAlt = faMapMarkedAlt;
+  faSchool = faSchool;
+  faMobileAlt = faMobileAlt;
 
   contactForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
