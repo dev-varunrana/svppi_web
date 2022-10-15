@@ -335,6 +335,10 @@
           <label>Percentage</label>
           <input type="number" class="form-control" formControlName="percentage">
         </div>
+        <div class="form-group col-md-6">
+          <label>Upload Marksheet</label>
+          <input (change)="onMarksheetSelected($event)" type="file" class="form-control" accept="image/*">
+        </div>
       </div>
     </form>
   </div>

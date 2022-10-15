@@ -21,6 +21,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class DashboardComponent {
   private collectionName = 'students';
   private basePath: string = '/student-profile-pic';
+  private marsheetBasePath: string = '/marksheets';
   closeResult: string;
   showSpinner: boolean = false;
 
@@ -39,6 +40,7 @@ export class DashboardComponent {
   hideResult2: boolean = false;
 
   profilePicSource: string;
+  marksheetPicSource: string;
 
   editableCourse = {
     id: "",
@@ -279,8 +281,38 @@ export class DashboardComponent {
   }
 
   addResult() {
-    if (this.addResultForm.valid) {
+    if(this.addResultForm.valid && this.marksheetPicSource) {
       this.showSpinner = true;
+
+      const file = this.marksheetPicSource;
+      const filePath = `${this.marsheetBasePath}/${new Date().getTime()}`;
+      const storageRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, file);
+
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          storageRef.getDownloadURL().subscribe(downloadURL => {
+            let data = this.addResultForm.value;
+            data.marksheetPic = downloadURL;
+            this.marksheetPicSource = undefined;
+            const resultDetails = this.addResultForm.value;
+            this.firestoreService.addResult(this.collectionName, resultDetails).then(() => {
+              this.showSpinner = false;
+              this.modalService.dismissAll();
+              this.showSuccess("Result added Successfully!");
+              this.addResultForm.reset();
+            }).catch((error) => {
+              this.showSpinner = false;
+              console.log(error.message);
+              this.showDanger(`Error: ${error.message}`);
+            })
+          })
+        })
+      ).subscribe();
+    }
+    else if(this.addResultForm.valid) {
+      this.showSpinner = true;
+
       const resultDetails = this.addResultForm.value;
       this.firestoreService.addResult(this.collectionName, resultDetails).then(() => {
         this.showSpinner = false;
@@ -292,7 +324,8 @@ export class DashboardComponent {
         console.log(error.message);
         this.showDanger(`Error: ${error.message}`);
       })
-    } else {
+    } 
+    else {
       console.log("Invalid Form! Please fill all the required fields.");
       this.showDanger("Invalid Form! Please fill all the required fields.");
     }
@@ -359,6 +392,13 @@ export class DashboardComponent {
         this.showSuccess("This student is successfully deleted!")
       })
       .catch((error: any) => this.showDanger(`Error: ${error.message}`));
+  }
+
+  onMarksheetSelected(event) {
+    if(event.target.files.length> 0) {
+      const file = event.target.files[0];
+      this.marksheetPicSource = file;
+    }
   }
 
   onFileSelected(event) {

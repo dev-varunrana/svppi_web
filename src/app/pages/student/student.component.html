@@ -88,8 +88,21 @@
             </div>
 
 
-        </div><div class=" section container border p-3"><b>Disclaimer:</b> SVPPI is not responsible for any inadvertent error that may have crept in the results being published on NET. The result published on net are for immediate information to the candidates, Data will be disappeared within few months. For further details or query contact SVPPI at Email:- contact@svppi.org</div>
+        </div>
+        <div *ngIf="student.result1 || student.result2 " class="col-md-12 my-2">
+          <div class="row p-2">
+            <div class="col-md-6">
+              <a *ngIf="student.result1.marksheetPic" target="_blank" [href]="student.result1.marksheetPic" class="btn btn-block btn-primary mr-3">FIRST YEAR MARKSHEET</a>
+            </div>
+            <div class="col-md-6">
+              <a *ngIf="student.result2.marksheetPic" target="_blank" [href]="student.result2.marksheetPic" class="btn btn-block btn-primary">SECOND YEAR MARKSHEET</a>
+            </div>
+          </div>
+        </div>
+        <div class="container border p-3 mt-2"><b>Disclaimer:</b> SVPPI is not responsible for any inadvertent error that may have crept in the results being published on NET. The result published on net are for immediate information to the candidates, Data will be disappeared within few months. For further details or query contact SVPPI at Email:- contact@svppi.org</div>
       </div>
+
+      
     </div>
   </div>
 </div>
