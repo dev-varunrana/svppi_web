@@ -41,6 +41,8 @@ export class DashboardComponent {
 
   profilePicSource: string;
   marksheetPicSource: string;
+  firstYearMarsheetUpdatePicSource: string;
+  secondYearMarsheetUpdatePicSource: string;
 
   editableCourse = {
     id: "",
@@ -111,12 +113,14 @@ export class DashboardComponent {
     firstYearTotalMarks: new FormControl(),
     firstYearObtainedMarks: new FormControl(),
     firstYearPercentage: new FormControl(),
+    firstYearMarksheet: new FormControl(),
 
     secondYearCertificateNo: new FormControl(),
     secondYearRollNo: new FormControl(),
     secondYearTotalMarks: new FormControl(),
     secondYearObtainedMarks: new FormControl(),
     secondYearPercentage: new FormControl(),
+    secondYearMarksheet: new FormControl(),
   })
 
   constructor(
@@ -324,7 +328,7 @@ export class DashboardComponent {
         console.log(error.message);
         this.showDanger(`Error: ${error.message}`);
       })
-    } 
+    }
     else {
       console.log("Invalid Form! Please fill all the required fields.");
       this.showDanger("Invalid Form! Please fill all the required fields.");
@@ -335,8 +339,154 @@ export class DashboardComponent {
     if (this.editStudentForm.valid) {
       this.showSpinner = true;
 
-      if (this.profilePicSource) {
-        console.log(this.profilePicSource);
+      console.log(this.firstYearMarsheetUpdatePicSource, this.secondYearMarsheetUpdatePicSource, this.profilePicSource);
+
+      if(this.firstYearMarsheetUpdatePicSource) {
+        let file = this.firstYearMarsheetUpdatePicSource;
+        let filePath = `${this.marsheetBasePath}/${new Date().getTime()}`;
+        let storageRef = this.storage.ref(filePath);
+        let task = this.storage.upload(filePath, file);
+
+        console.log(file, filePath, task);
+
+        task.snapshotChanges().pipe(
+          finalize(() => {
+            console.log("storageRef:",storageRef);
+            storageRef.getDownloadURL().subscribe(downloadURL => {
+              let data = this.editStudentForm.value;
+              data.firstYearMarksheet = downloadURL;
+              console.log("downloadURL: ",downloadURL);
+
+              if(this.secondYearMarsheetUpdatePicSource) {
+
+                let file = this.secondYearMarsheetUpdatePicSource;
+                let filePath = `${this.marsheetBasePath}/${new Date().getTime()}`;
+                let storageRef = this.storage.ref(filePath);
+                let task = this.storage.upload(filePath, file);
+
+                task.snapshotChanges().pipe(
+                  finalize(() => {
+                    storageRef.getDownloadURL().subscribe(downloadURL => {
+                      let data = this.editStudentForm.value;
+                      data.secondYearMarksheet = downloadURL;
+
+                      if(this.profilePicSource) {
+                        const file = this.profilePicSource;
+                        const filePath = `${this.basePath}/${new Date().valueOf()}`;
+                        const storageRef = this.storage.ref(filePath);
+                        const task = this.storage.upload(filePath, file);
+
+                        task.snapshotChanges().pipe(
+                          finalize(() => {
+                            storageRef.getDownloadURL().subscribe(downloadURL => {
+                              const data = this.editStudentForm.value;
+                              data.profilePic = downloadURL;
+                              const studentDetails = this.editStudentDataToFirestore(data);
+                              this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
+                                this.showSpinner = false;
+                                this.modalService.dismissAll();
+                                this.showSuccess("Student updated Successfully!");
+                                this.addStudentForm.reset();
+                              }).catch((error) => {
+                                this.showSpinner = false;
+                                console.log(error.message);
+                                this.showDanger(`Error: ${error.message}`);
+                              })
+                            })
+                          })
+                        ).subscribe();
+                      } else {
+                        const studentDetails = this.editStudentDataToFirestore(data);
+                        this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
+                          this.showSpinner = false;
+                          this.modalService.dismissAll();
+                          this.showSuccess("Student updated Successfully!");
+                          this.addStudentForm.reset();
+                        }).catch((error) => {
+                          this.showSpinner = false;
+                          console.log(error.message);
+                          this.showDanger(`Error: ${error.message}`);
+                        })
+                      }
+                    })
+                  })
+                ).subscribe();
+              } else {
+                console.log(data);
+                const studentDetails = this.editStudentDataToFirestore(data);
+                this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
+                  this.showSpinner = false;
+                  this.modalService.dismissAll();
+                  this.showSuccess("Student updated Successfully!");
+                  this.addStudentForm.reset();
+                }).catch((error) => {
+                  this.showSpinner = false;
+                  console.log(error.message);
+                  this.showDanger(`Error: ${error.message}`);
+                })
+              }
+            })
+          })
+        ).subscribe();;
+      }
+
+      else if(this.secondYearMarsheetUpdatePicSource) {
+
+        let file = this.secondYearMarsheetUpdatePicSource;
+        let filePath = `${this.marsheetBasePath}/${new Date().getTime()}`;
+        let storageRef = this.storage.ref(filePath);
+        let task = this.storage.upload(filePath, file);
+
+        task.snapshotChanges().pipe(
+          finalize(() => {
+            storageRef.getDownloadURL().subscribe(downloadURL => {
+              let data = this.editStudentForm.value;
+              data.secondYearMarksheet = downloadURL;
+
+              if(this.profilePicSource) {
+                const file = this.profilePicSource;
+                const filePath = `${this.basePath}/${new Date().valueOf()}`;
+                const storageRef = this.storage.ref(filePath);
+                const task = this.storage.upload(filePath, file);
+
+                task.snapshotChanges().pipe(
+                  finalize(() => {
+                    storageRef.getDownloadURL().subscribe(downloadURL => {
+                      const data = this.editStudentForm.value;
+                      data.profilePic = downloadURL;
+                      const studentDetails = this.editStudentDataToFirestore(data);
+                      this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
+                        this.showSpinner = false;
+                        this.modalService.dismissAll();
+                        this.showSuccess("Student updated Successfully!");
+                        this.addStudentForm.reset();
+                      }).catch((error) => {
+                        this.showSpinner = false;
+                        console.log(error.message);
+                        this.showDanger(`Error: ${error.message}`);
+                      })
+                    })
+                  })
+                ).subscribe();
+              } else {
+                const studentDetails = this.editStudentDataToFirestore(data);
+                this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
+                  this.showSpinner = false;
+                  this.modalService.dismissAll();
+                  this.showSuccess("Student updated Successfully!");
+                  this.addStudentForm.reset();
+                }).catch((error) => {
+                  this.showSpinner = false;
+                  console.log(error.message);
+                  this.showDanger(`Error: ${error.message}`);
+                })
+              }
+            })
+          })
+        ).subscribe();
+      }
+
+      else if(this.profilePicSource) {
         const file = this.profilePicSource;
         const filePath = `${this.basePath}/${new Date().valueOf()}`;
         const storageRef = this.storage.ref(filePath);
@@ -347,7 +497,7 @@ export class DashboardComponent {
             storageRef.getDownloadURL().subscribe(downloadURL => {
               const data = this.editStudentForm.value;
               data.profilePic = downloadURL;
-              const studentDetails = this.editStudentDataToFirestore(this.editStudentForm.value);
+              const studentDetails = this.editStudentDataToFirestore(data);
               this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
                 this.showSpinner = false;
                 this.modalService.dismissAll();
@@ -361,9 +511,11 @@ export class DashboardComponent {
             })
           })
         ).subscribe();
-      } else {
+      }
+
+      else {
+
         const studentDetails = this.editStudentDataToFirestore(this.editStudentForm.value);
-        console.log("details: ", studentDetails);
         this.firestoreService.editStudent(this.collectionName, studentDetails).then(() => {
           this.showSpinner = false;
           this.modalService.dismissAll();
@@ -398,6 +550,17 @@ export class DashboardComponent {
     if(event.target.files.length> 0) {
       const file = event.target.files[0];
       this.marksheetPicSource = file;
+    }
+  }
+
+  onMarksheetUpdated(event, fieldName) {
+    if(event.target.files.length> 0) {
+      const file = event.target.files[0];
+      if(fieldName == "first") {
+        this.firstYearMarsheetUpdatePicSource = file;
+      } else {
+        this.secondYearMarsheetUpdatePicSource = file;
+      }
     }
   }
 
@@ -550,12 +713,14 @@ export class DashboardComponent {
       firstYearTotalMarks: data.hasOwnProperty('result1') ? data.result1.totalMarks : '',
       firstYearObtainedMarks: data.hasOwnProperty('result1') ? data.result1.obtainedMarks : '',
       firstYearPercentage: data.hasOwnProperty('result1') ? data.result1.percentage : '',
+      firstYearMarksheet: data.hasOwnProperty('result1') ? data.result1.marksheetPic : '',
 
       secondYearCertificateNo: data.hasOwnProperty('result2') ? data.result2.certificateNo : '',
       secondYearRollNo: data.hasOwnProperty('result2') ? data.result2.rollNo : '',
       secondYearTotalMarks: data.hasOwnProperty('result2') ? data.result2.totalMarks : '',
       secondYearObtainedMarks: data.hasOwnProperty('result2') ? data.result2.obtainedMarks : '',
       secondYearPercentage: data.hasOwnProperty('result2') ? data.result2.percentage : '',
+      secondYearMarksheet: data.hasOwnProperty('result1') ? data.result1.marksheetPic : '',
     }
   }
 
@@ -590,7 +755,8 @@ export class DashboardComponent {
           rollNo: data.firstYearRollNo,
           totalMarks: data.firstYearTotalMarks,
           obtainedMarks: data.firstYearObtainedMarks,
-          percentage: data.firstYearPercentage
+          percentage: data.firstYearPercentage,
+          marksheetPic: data.firstYearMarksheet
         }
       }
     } else if(this.hideResult1) {
@@ -610,7 +776,8 @@ export class DashboardComponent {
           rollNo: data.secondYearRollNo,
           totalMarks: data.secondYearTotalMarks,
           obtainedMarks: data.secondYearObtainedMarks,
-          percentage: data.secondYearPercentage
+          percentage: data.secondYearPercentage,
+          marksheetPic: data.secondYearMarksheet
         }
       }
     } else {
@@ -630,14 +797,16 @@ export class DashboardComponent {
           rollNo: data.firstYearRollNo,
           totalMarks: data.firstYearTotalMarks,
           obtainedMarks: data.firstYearObtainedMarks,
-          percentage: data.firstYearPercentage
+          percentage: data.firstYearPercentage,
+          marksheetPic: data.firstYearMarksheet
         },
         result2: {
           certificateNo: data.secondYearCertificateNo,
           rollNo: data.secondYearRollNo,
           totalMarks: data.secondYearTotalMarks,
           obtainedMarks: data.secondYearObtainedMarks,
-          percentage: data.secondYearPercentage
+          percentage: data.secondYearPercentage,
+          marksheetPic: data.secondYearMarksheet
         }
       }
     }

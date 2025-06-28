@@ -49,7 +49,7 @@ export class HomeComponent {
     },
     {
       id: 5,
-      name: "Shohib Pasha",
+      name: "Shoaib Pasha",
       quote: "After going through many efforts i found this wonderful institute. I really liked the way they educate here. I'm very grateful that i got success from SVPPI.",
       post: "~ X-RAY Technician",
       hospital: "Laxmi Hospital"
@@ -58,7 +58,7 @@ export class HomeComponent {
       id: 6,
       name: "Rashi kumari",
       quote: "Taking the decision to study from SVPPI was the best decision of my life.Now i am doing a respectable job.",
-      post: "~ Nursing Assistant",
+      post: "~ ICU Technician",
       hospital: "Yashraj Hospital"
     }
   ]

@@ -424,6 +424,11 @@
               <label>Percentage</label>
               <input type="number" class="form-control" formControlName="firstYearPercentage">
             </div>
+            <div class="form-group col-md-4">
+              <label>Upload First Year Marksheet</label>
+              <input (change)="onMarksheetUpdated($event, 'first')" type="file" class="form-control" accept="image/*">
+              <input type="hidden" formControlName="firstYearMarksheet">
+            </div>
           </div>
         </div>
         <div class="col-md-12 mt-3" [ngClass]="hideResult2? 'd-none' : ''">
@@ -448,6 +453,11 @@
             <div class="form-group col-md-4">
               <label>Percentage</label>
               <input type="number" class="form-control" formControlName="secondYearPercentage">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Upload Second Year Marksheet</label>
+              <input (change)="onMarksheetUpdated($event, 'second')" type="file" class="form-control" accept="image/*">
+              <input type="hidden" formControlName="secondYearMarksheet">
             </div>
           </div>
         </div>

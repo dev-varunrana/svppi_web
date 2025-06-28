@@ -12,10 +12,7 @@ export class AffiliationComponent implements OnInit {
       src: "assets/images/affiliations/vivo.jpg",
       url: "https://vivohealthcare.com/skill-center.html"
     },
-    {
-      src: "assets/images/affiliations/spfl.jpg",
-      url: "https://stateparamedicalfaculty.com"
-    },
+   
     {
       src: "assets/images/affiliations/nsdc.jpg",
       url: "https://nsdcindia.org/"
@@ -37,9 +34,14 @@ export class AffiliationComponent implements OnInit {
       url: "https://ngodarpan.gov.in/"
     },
     {
-      src: "assets/images/affiliations/dsgpmc.jpg",
-      url: "https://paramedicalcouncildelhi.com/"
+      src: "assets/images/affiliations/aiuni.jpg",
+      url: "https://aiu.edu.in/"
     },
+    {
+      src: "assets/images/affiliations/dsgpmc.jpg",
+      url: "https://https://paramedicalcouncildelhi.com/"
+    },
+   
 
   ]
 

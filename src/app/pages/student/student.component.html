@@ -89,12 +89,12 @@
 
 
         </div>
-        <div *ngIf="student.result1 || student.result2 " class="col-md-12 my-2">
+        <div *ngIf="student.result1 || student.result2 " class="col-md-12">
           <div class="row p-2">
-            <div class="col-md-6">
+            <div class="col-md-6 my-2">
               <a *ngIf="student.result1.marksheetPic" target="_blank" [href]="student.result1.marksheetPic" class="btn btn-block btn-primary mr-3">FIRST YEAR MARKSHEET</a>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 my-2">
               <a *ngIf="student.result2.marksheetPic" target="_blank" [href]="student.result2.marksheetPic" class="btn btn-block btn-primary">SECOND YEAR MARKSHEET</a>
             </div>
           </div>
